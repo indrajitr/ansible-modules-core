@@ -40,6 +40,11 @@ options:
     description:
       - Whether to install (C(present), C(latest)), or remove (C(absent)) a package.
     required: true
+  pkg_args:
+    description:
+      - Additional package manager specific options to be passed on to the underlying package manager module in use (yum, apt, etc).
+    required: false
+    version_added: 2.1
   use:
     description:
       - The required package manager module to use (yum, apt, etc). The default 'auto' will use existing facts or try to autodetect it.
@@ -58,4 +63,9 @@ EXAMPLES = '''
 # This uses a variable as this changes per distribution.
 - name: remove the apache package
   package : name={{apache}} state=absent
+
+# This uses variable name as well as pkg_args as these change per distribution.
+- name: remove the apache package
+  package: name={{apache}} pkg_args={{custom_args}}
+# where custom_args: {'state': present, 'update_cache': yes}
 '''
